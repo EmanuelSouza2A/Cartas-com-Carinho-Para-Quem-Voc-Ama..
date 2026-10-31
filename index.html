@@ -104,8 +104,8 @@
         .eq-bar:nth-child(3) { animation-delay: 0.4s; }
         .eq-bar:nth-child(4) { animation-delay: 0.1s; }
 
-        /* Estilo da Tela de Erro para PC */
-        #pc-error-screen {
+        /* Estilo da Tela de Erro / Bloqueio */
+        #browser-error-screen {
             display: none;
             position: fixed;
             inset: 0;
@@ -120,18 +120,18 @@
 </head>
 <body class="flex items-center justify-center p-4 relative min-h-screen">
 
-  <!-- ================= TELA DE BLOQUEIO PARA PC / NOTEBOOK ================= -->
-  <div id="pc-error-screen">
+  <!-- ================= TELA DE BLOQUEIO (EXIGE EXCLUSIVAMENTE GOOGLE CHROME) ================= -->
+  <div id="browser-error-screen">
     <div class="max-w-md w-full bg-neutral-900 border border-neutral-800 p-8 rounded-3xl shadow-2xl">
       <div class="text-red-500 text-6xl mb-4 font-mono font-black tracking-wider">
         ERROR 403
       </div>
-      <h2 class="text-xl font-bold text-white mb-3">Dispositivo Não Compatível</h2>
+      <h2 class="text-xl font-bold text-white mb-3">Navegador Não Compatível</h2>
       <p class="text-neutral-400 text-sm leading-relaxed mb-6">
-        Para uma melhor experiência romântica, interativa e sem anúncios, por favor, abra este link utilizando um celular (Android ou iPhone) ou tablet 📱💖.
+        Para garantir que as músicas funcionem perfeitamente, sem anúncios e sem interrupções, por favor, abra este link utilizando exclusivamente o navegador <strong class="text-white">Google Chrome</strong> 🌐✨.
       </p>
       <div class="bg-neutral-800 py-3 px-4 rounded-xl text-xs text-neutral-300 font-mono">
-        Acesse via QR Code com a câmera do seu celular.
+        Copie o link e abra diretamente no Google Chrome.
       </div>
     </div>
   </div>
@@ -293,15 +293,23 @@
   <script src="https://www.youtube.com/iframe_api"></script>
 
   <script>
-    // TRAVA DE SEGURANÇA PARA PC / NOTEBOOK
-    function checkDevice() {
-      const isDesktop = !(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
-      // Se for computador de mesa/notebook, exibe a tela de erro 403
-      if (isDesktop) {
-        document.getElementById('pc-error-screen').style.display = 'flex';
+    // TRAVA DE SEGURANÇA: EXIGIR EXCLUSIVAMENTE O GOOGLE CHROME (BLOQUEIA PC E OUTROS NAVEGADORES)
+    function checkGoogleChromeOnly() {
+      const ua = navigator.userAgent;
+      
+      // Verifica se é o Google Chrome real (no iOS é CriOS, no Android/PC contém Chrome, sem marcas concorrentes)
+      const isCriOS = /CriOS/i.test(ua);
+      const isChrome = /Chrome/i.test(ua) && !/Edg|OPR|SamsungBrowser|UCBrowser|Brave|Firefox|Safari/i.test(ua);
+      
+      // Caso especial para garantir Chrome no Android/Desktop
+      const isGoogleChrome = isCriOS || (isChrome && !/Safari/i.test(ua));
+
+      // Se NÃO for o Google Chrome, exibe o Erro 403 de bloqueio
+      if (!isGoogleChrome) {
+        document.getElementById('browser-error-screen').style.display = 'flex';
       }
     }
-    checkDevice();
+    checkGoogleChromeOnly();
 
     // Gerar QR Code inicial na tela de hub
     new QRCode(document.getElementById("qrcode"), {
@@ -355,7 +363,7 @@
       document.getElementById('letter-content').classList.remove('hidden');
     }
 
-    // Playlist original com suas músicas e imagens
+    // Playlist com as músicas oficiais
     const playlist = [
       {
         title: "Oração",
