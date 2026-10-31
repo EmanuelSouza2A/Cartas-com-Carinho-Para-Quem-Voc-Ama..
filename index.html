@@ -15,9 +15,9 @@
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #feada6 100%);
+            background: radial-gradient(circle at center, #1a2e1d 0%, #0d0d0d 70%);
             min-height: 100vh;
-            color: #333;
+            color: #ffffff;
             overflow-x: hidden;
             position: relative;
         }
@@ -28,19 +28,20 @@
 
         /* Efeito Glassmorphism de Luxo */
         .glass-card {
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.94);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 2px solid rgba(255, 182, 193, 0.8);
             box-shadow: 0 25px 50px rgba(216, 58, 86, 0.25);
+            color: #333;
         }
 
         .glass-card-dark {
-            background: rgba(18, 18, 18, 0.9);
+            background: rgba(18, 18, 18, 0.88);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.8);
             color: #ffffff;
         }
 
@@ -63,22 +64,22 @@
         .particle {
             position: fixed;
             top: -30px;
-            font-size: 20px;
+            font-size: 18px;
             user-select: none;
             pointer-events: none;
-            z-index: 1;
+            z-index: 0;
             animation: fall linear infinite;
         }
 
         @keyframes floatUp {
             0% { transform: translateY(0) scale(0.6); opacity: 1; }
-            100% { transform: translateY(-130px) scale(1.5); opacity: 0; }
+            100% { transform: translateY(-150px) scale(1.6); opacity: 0; }
         }
 
         .floating-heart {
             position: absolute;
             color: #1DB954;
-            animation: floatUp 1.2s ease-out forwards;
+            animation: floatUp 1.3s ease-out forwards;
             pointer-events: none;
             z-index: 50;
         }
@@ -109,19 +110,19 @@
   <!-- Fundo com Partículas Flutuantes -->
   <div id="particles-container"></div>
 
-  <!-- Player Oculto para o YouTube API -->
+  <!-- Player do YouTube 100% Oculto (Áudio em segundo plano sem anúncios visuais) -->
   <div style="position: absolute; width: 0; height: 0; overflow: hidden; opacity: 0; pointer-events: none;">
     <div id="youtube-player"></div>
   </div>
 
-  <!-- ================= TELA 0: MENU HUB DEMONSTRATIVO (CAPA / INÍCIO) ================= -->
-  <div id="screen-hub" class="w-full max-w-lg glass-card rounded-3xl p-8 text-center fade-in relative z-10">
+  <!-- ================= TELA 0: MENU HUB DEMONSTRATIVO (CAPA / QR CODE) ================= -->
+  <div id="screen-hub" class="w-full max-w-md glass-card rounded-3xl p-8 text-center fade-in relative z-10">
     <div class="inline-block bg-pink-100 text-[#d83a56] text-xs font-bold px-4 py-1.5 rounded-full mb-3 uppercase tracking-wider border border-pink-200">
       ✨ Vitrine de Produtos Digitais ✨
     </div>
     <h1 class="title-script text-5xl text-[#d83a56] mb-3 font-bold">Demonstração Interativa</h1>
     <p class="text-neutral-600 text-sm mb-6 leading-relaxed">
-      Escolha abaixo qual modelo de presente digital você deseja testar para apresentar aos seus futuros clientes:
+      Aponte a câmera do celular para testar o QR Code ou escolha abaixo qual modelo deseja visualizar:
     </p>
 
     <!-- QR Code Demonstrativo da Capa -->
@@ -135,12 +136,8 @@
         <i class="fa-solid fa-envelope-open-text text-xl"></i> 💌 Testar Carta Romântica
       </button>
       <button onclick="switchScreen('screen-spotify')" class="w-full bg-neutral-900 hover:bg-black text-[#1DB954] border border-[#1DB954]/30 font-bold py-4 px-6 rounded-2xl transition-all shadow-lg flex items-center justify-center gap-3 text-base cursor-pointer transform hover:scale-[1.02]">
-        <i class="fa-brands fa-spotify text-2xl"></i> 🎶 Testar Player Spotify / Carta Sonora
+        <i class="fa-brands fa-spotify text-2xl"></i> 🎶 Testar Carta Sonora (Spotify)
       </button>
-    </div>
-    
-    <div class="mt-6 text-xs text-neutral-500 font-medium">
-      Catálogo de Vendas • 100% Funcional e Responsivo para Celular
     </div>
   </div>
 
@@ -148,7 +145,6 @@
   <!-- ================= TELA 1: CARTA ROMÂNTICA DIGITAL ================= -->
   <div id="screen-letter" class="hidden w-full max-w-xl glass-card rounded-3xl p-6 md:p-8 fade-in relative z-10 text-left">
     
-    <!-- Botão de Voltar ao Hub -->
     <button onclick="switchScreen('screen-hub')" class="mb-4 text-xs font-bold text-[#d83a56] bg-pink-100 hover:bg-pink-200 px-4 py-2 rounded-xl transition-all flex items-center gap-2 cursor-pointer w-fit">
       <i class="fa-solid fa-arrow-left"></i> Voltar ao Menu Principal
     </button>
@@ -158,15 +154,13 @@
       <span class="inline-block bg-pink-100 text-[#d83a56] text-xs font-semibold px-3 py-1 rounded-full mt-2">✨ Modelo de Carta Demonstrativa ✨</span>
     </div>
 
-    <!-- Botão de Abrir Envelope -->
     <div id="letter-action-area" class="text-center py-6">
       <button onclick="openDigitalLetter()" class="bg-gradient-to-r from-rose-500 to-pink-600 text-white font-bold py-4 px-8 rounded-full shadow-xl shadow-rose-500/40 text-lg hover:scale-105 transition-all cursor-pointer">
         ✉️ Toque para Abrir a Carta 💖
       </button>
     </div>
 
-    <!-- Conteúdo da Carta (Revelado ao clicar) -->
-    <div id="letter-content" class="hidden space-y-4 bg-white/90 p-6 rounded-2xl border border-pink-200 shadow-inner text-neutral-700 text-sm md:text-base leading-relaxed">
+    <div id="letter-content" class="hidden space-y-4 bg-white/95 p-6 rounded-2xl border border-pink-200 shadow-inner text-neutral-700 text-sm md:text-base leading-relaxed">
       <p><strong>Meu amor, ❤️</strong></p>
       <p>Se você está lendo esta carta agora, é porque eu precisava que os seus olhos vissem e o seu coração sentisse tudo o que as minhas palavras às vezes não conseguem expressar por inteiro...</p>
       <p>Essa rosa linda e esse presente não estão aí por acaso. Eles servem para te lembrar que, em um mundo onde tudo muda tão rápido, o meu amor por você continua intacto, puro e verdadeiro.</p>
@@ -184,18 +178,16 @@
   <!-- ================= TELA 2: PLAYER SPOTIFY / CARTA SONORA ================= -->
   <div id="screen-spotify" class="hidden w-full max-w-xl glass-card-dark rounded-3xl p-6 md:p-8 fade-in relative z-10">
     
-    <!-- Botão de Voltar ao Hub -->
     <button onclick="stopSpotifyAndReturn()" class="mb-4 text-xs font-bold text-black bg-[#1DB954] hover:bg-[#1ed760] px-4 py-2 rounded-xl transition-all flex items-center gap-2 cursor-pointer w-fit shadow-md">
       <i class="fa-solid fa-arrow-left"></i> Voltar ao Menu Principal
     </button>
 
-    <!-- Header Spotify -->
     <div class="flex items-center justify-between mb-5 pb-3 border-b border-neutral-800">
       <div class="flex items-center gap-3">
         <i class="fa-brands fa-spotify text-[#1DB954] text-3xl"></i>
         <div>
-          <h3 class="text-[10px] uppercase tracking-widest text-neutral-400 font-bold">Carta Sonora • Exemplo</h3>
-          <span class="text-xs font-bold text-white">Trilha Sonora Especial</span>
+          <h3 class="text-[10px] uppercase tracking-widest text-neutral-400 font-bold">Playlist Demonstrativa</h3>
+          <span class="text-xs font-bold text-white">Nossa Trilha Sonora</span>
         </div>
       </div>
       <div class="text-xs text-neutral-300 bg-neutral-900 px-3 py-1.5 rounded-full flex items-center gap-2 border border-white/10">
@@ -204,20 +196,27 @@
           <div class="eq-bar"></div>
           <div class="eq-bar"></div>
         </div>
-        <span class="font-medium text-[#1DB954]">Tocando</span>
+        <span class="font-medium text-[#1DB954]">Tocando ao Vivo</span>
       </div>
     </div>
 
-    <!-- Capa do Álbum / Foto -->
-    <div class="relative w-full max-w-[240px] aspect-square mx-auto mb-5 rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black flex items-center justify-center group">
-      <img id="album-cover" src="" alt="Capa" class="w-full h-full object-cover object-center">
+    <!-- Capa do Álbum -->
+    <div class="relative w-full max-w-[260px] aspect-square mx-auto mb-5 rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black flex items-center justify-center group">
+      <img id="album-cover" src="" alt="Capa" class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105">
+      
+      <label for="photo-upload" class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center cursor-pointer p-4 text-center">
+        <i class="fa-solid fa-camera text-2xl text-white mb-2"></i>
+        <span class="text-xs font-semibold text-white">Trocar foto desta música</span>
+      </label>
+      <input type="file" id="photo-upload" accept="image/*" class="hidden" onchange="loadCustomPhoto(event)">
+
       <div class="absolute bottom-3 right-3 bg-black/80 px-2.5 py-1 rounded-lg flex items-center gap-1.5 border border-white/10">
         <i class="fa-solid fa-barcode text-[#1DB954] text-xs"></i>
         <span class="text-[9px] tracking-wider text-white font-mono font-bold">SPOTIFY CODE</span>
       </div>
     </div>
 
-    <!-- Info da Música -->
+    <!-- Informações da Música -->
     <div class="flex items-center justify-between mb-3 px-2">
       <div class="overflow-hidden">
         <h4 id="song-title" class="text-base font-bold text-white truncate">Carregando...</h4>
@@ -237,20 +236,22 @@
       <input type="range" id="progress-bar" value="0" min="0" max="100" step="0.1" class="w-full h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer spotify-range" oninput="seekMusic(this.value)">
     </div>
 
-    <!-- Controles -->
+    <!-- Controles do Player -->
     <div class="flex items-center justify-around px-2 mb-6">
+      <button onclick="toggleShuffle()" id="shuffle-btn" class="text-neutral-400 hover:text-white text-lg transition-colors p-2 cursor-pointer"><i class="fa-solid fa-shuffle"></i></button>
       <button onclick="prevSong()" class="text-white hover:text-[#1DB954] text-lg transition-colors p-2 cursor-pointer"><i class="fa-solid fa-backward-step"></i></button>
       <button onclick="togglePlay()" id="play-pause-btn" class="w-14 h-14 bg-white hover:scale-105 text-black rounded-full flex items-center justify-center text-xl transition-all shadow-xl cursor-pointer">
         <i class="fa-solid fa-play ml-0.5" id="play-icon"></i>
       </button>
       <button onclick="nextSong()" class="text-white hover:text-[#1DB954] text-lg transition-colors p-2 cursor-pointer"><i class="fa-solid fa-forward-step"></i></button>
+      <button onclick="toggleRepeat()" id="repeat-btn" class="text-neutral-400 hover:text-white text-lg transition-colors p-2 cursor-pointer"><i class="fa-solid fa-repeat"></i></button>
     </div>
 
     <!-- Bloco de Texto / Carta Sonora -->
     <div class="bg-neutral-900/90 border border-neutral-800 rounded-2xl p-4 shadow-inner">
       <div class="flex items-center justify-between mb-2 pb-1.5 border-b border-neutral-800">
         <span class="text-[11px] font-bold tracking-widest text-[#1DB954] uppercase">
-          <i class="fa-solid fa-quote-left"></i> Mensagem da Faixa
+          <i class="fa-solid fa-quote-left"></i> Carta Sonora (Demonstração)
         </span>
       </div>
       <div id="lyrics-container" class="text-xs md:text-sm text-neutral-300 leading-relaxed min-h-[70px] flex items-center justify-center text-center font-normal">
@@ -289,7 +290,7 @@
     }
     initParticles();
 
-    // Alternar Telas do Demonstrativo
+    // Alternar Telas
     function switchScreen(screenId) {
       document.getElementById('screen-hub').classList.add('hidden');
       document.getElementById('screen-letter').classList.add('hidden');
@@ -297,7 +298,6 @@
 
       document.getElementById(screenId).classList.remove('hidden');
 
-      // Se abrir o spotify, inicializa a música se necessário
       if(screenId === 'screen-spotify') {
         if(!ytPlayer && typeof YT !== 'undefined' && YT.Player) {
           initYouTubePlayer();
@@ -305,51 +305,72 @@
           loadSong(currentIndex, false);
         }
       } else {
-        // Pausa música ao sair do player spotify
         if(ytPlayer && ytPlayer.pauseVideo) {
           ytPlayer.pauseVideo();
         }
       }
     }
 
-    // Abrir carta digital
     function openDigitalLetter() {
       document.getElementById('letter-action-area').classList.add('hidden');
       document.getElementById('letter-content').classList.remove('hidden');
     }
 
-    // Playlist Demonstrativa Spotify
+    // Playlist original com suas músicas e imagens
     const playlist = [
       {
-        title: "Faixa Romântica 01",
-        artist: "Trilha Sonora Especial",
+        title: "Oração",
+        artist: "A Banda Mais Bonita da Cidade",
         youtubeId: "4DhNQWw877w",
         image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600&auto=format&fit=crop",
-        lyrics: "“Há conexões que parecem obra do destino, como aquela melodia perfeita que toca na hora exata em que mais precisamos.”"
+        lyrics: "“Se o algoritmo do universo pudesse calcular o que me faz feliz, tenho certeza de que o resultado seria exatamente você. Há conexões que parecem obra do destino.”"
       },
       {
-        title: "Faixa Romântica 02",
-        artist: "Trilha Sonora Especial",
+        title: "Idiota",
+        artist: "Jão",
         youtubeId: "PPGjmXlWyc4",
         image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=600&auto=format&fit=crop",
-        lyrics: "“Você é a faixa favorita da playlist, aquela que acalma os dias mais agitados e ilumina até os silêncios.”"
+        lyrics: "“Você é a minha faixa favorita, aquela que eu repito sem cansar, que acalma meus dias caóticos e ilumina até os meus silêncios mais profundos.”"
       },
       {
-        title: "Faixa Romântica 03",
-        artist: "Trilha Sonora Especial",
+        title: "Partilhar",
+        artist: "DiDengo",
         youtubeId: "oqpLJ1BdNJQ",
         image: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=600&auto=format&fit=crop",
-        lyrics: "“Cada acorde guarda um sentimento sincero, transformando momentos comuns em lembranças inesquecíveis.”"
+        lyrics: "“Guardei estas canções aqui porque cada uma delas carrega um pedacinho de tudo o que eu sinto por ti, transformando momentos simples em memórias eternas.”"
+      },
+      {
+        title: "Latino Americano",
+        artist: "Drinho Sp",
+        youtubeId: "lu7HWo_01FQ",
+        image: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=600&auto=format&fit=crop",
+        lyrics: "“...Mas faltam palavras no mundo para explicar a sorte que é ter você na minha vida. Que a gente continue trilhando esse caminho juntos.”"
+      },
+      {
+        title: "Meu Endereço",
+        artist: "Ana Laura Lopes",
+        youtubeId: "IUu6_1ROwgk",
+        image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop",
+        lyrics: "“Encontrar você foi como achar o meu endereço no mundo. Que esta trilha sonora te traga o mesmo sorriso toda vez que penso em nós dois.”"
+      },
+      {
+        title: "Bem (Chapéu de Palha)",
+        artist: "Nuno Vieira",
+        youtubeId: "9evrjEC4vc4",
+        image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=600&auto=format&fit=crop",
+        lyrics: "“Se tu me visse como eu vejo tu, meu bem, eu ficaria bem, tu ficaria bem. No meu quarto, teu cheiro tu esqueceu aqui...”"
       }
     ];
 
     let currentIndex = 0;
     let isPlaying = false;
+    let isShuffle = false;
+    let isRepeat = false;
     let ytPlayer = null;
     let progressTimer = null;
 
     function onYouTubeIframeAPIReady() {
-      // API pronta
+      // API carregada
     }
 
     function initYouTubePlayer() {
@@ -357,7 +378,14 @@
         height: '0',
         width: '0',
         videoId: playlist[0].youtubeId,
-        playerVars: { 'autoplay': 0, 'controls': 0 },
+        playerVars: {
+          'autoplay': 0,
+          'controls': 0,
+          'disablekb': 1,
+          'fs': 0,
+          'modestbranding': 1,
+          'rel': 0
+        },
         events: {
           'onStateChange': onPlayerStateChange
         }
@@ -376,7 +404,11 @@
         stopProgressTracking();
       } else if (event.data === YT.PlayerState.ENDED) {
         stopProgressTracking();
-        nextSong();
+        if (isRepeat) {
+          ytPlayer.playVideo();
+        } else {
+          nextSong();
+        }
       }
     }
 
@@ -385,7 +417,7 @@
       document.getElementById('song-title').innerText = song.title;
       document.getElementById('song-artist').innerText = song.artist;
       document.getElementById('album-cover').src = song.image;
-      document.getElementById('lyrics-container').innerText = song.lyrics;
+      document.getElementById('lyrics-container').innerHTML = `<p class="fade-in">${song.lyrics}</p>`;
 
       if (ytPlayer && ytPlayer.loadVideoById) {
         if (autoPlay) {
@@ -415,13 +447,29 @@
     }
 
     function nextSong() {
-      currentIndex = (currentIndex + 1) % playlist.length;
+      if (isShuffle) {
+        currentIndex = Math.floor(Math.random() * playlist.length);
+      } else {
+        currentIndex = (currentIndex + 1) % playlist.length;
+      }
       loadSong(currentIndex, true);
     }
 
     function prevSong() {
       currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
       loadSong(currentIndex, true);
+    }
+
+    function toggleShuffle() {
+      isShuffle = !isShuffle;
+      const btn = document.getElementById('shuffle-btn');
+      btn.style.color = isShuffle ? '#1DB954' : '#a3a3a3';
+    }
+
+    function toggleRepeat() {
+      isRepeat = !isRepeat;
+      const btn = document.getElementById('repeat-btn');
+      btn.style.color = isRepeat ? '#1DB954' : '#a3a3a3';
     }
 
     function startProgressTracking() {
@@ -481,6 +529,18 @@
       heart.style.top = `${rect.top}px`;
       document.body.appendChild(heart);
       setTimeout(() => heart.remove(), 1200);
+    }
+
+    function loadCustomPhoto(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('album-cover').src = e.target.result;
+          playlist[currentIndex].image = e.target.result;
+        }
+        reader.readAsDataURL(file);
+      }
     }
 
     function stopSpotifyAndReturn() {
